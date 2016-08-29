@@ -2,15 +2,20 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  text-align: center;
 }
+
 #map {
   margin: auto;
   height: 50%;
   width: 50%;
+  margin-bottom: 7px;
 }
+
 a[href^="http://maps.google.com/maps"]{
   display:none !important;
 }
+
 a[href^="https://maps.google.com/maps"]{
   display:none !important;
 }
@@ -18,10 +23,16 @@ a[href^="https://maps.google.com/maps"]{
 .gmnoprint a, .gmnoprint span, .gm-style-cc {
   display: none;
 }
+
 .gmnoprint div {
   background: none;
 }
+
 .header {
-  text-align: center;
   font-family: Roboto, sans-serif;
+}
+
+.slider {
+  margin: auto;
+  width: 35%;
 }
