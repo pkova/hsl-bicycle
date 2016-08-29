@@ -15,17 +15,22 @@
        height: 50%;
        width: 50%;
      }
-     a[href^="http://maps.google.com/maps"]{display:none !important}
-     a[href^="https://maps.google.com/maps"]{display:none !important}
+     a[href^="http://maps.google.com/maps"]{
+       display:none !important;
+     }
+     a[href^="https://maps.google.com/maps"]{
+       display:none !important;
+     }
 
      .gmnoprint a, .gmnoprint span, .gm-style-cc {
-       display:none;
+       display: none;
      }
      .gmnoprint div {
-       background:none !important;
+       background: none;
      }
      .header {
        text-align: center;
+       font-family: Roboto, sans-serif;
      }
     </style>
   </head>
@@ -62,10 +67,7 @@
          });
        });
      }
-
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6ksJ2gebEWec57CWJ2_34XktqZAAJgKQ&callback=initMap" async defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
   </body>
 </html>
