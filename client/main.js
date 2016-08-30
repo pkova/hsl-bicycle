@@ -32,7 +32,7 @@ function initMap() {
       position: {lat: coord.lat, lng: coord.lng}
     });
 
-    cityCircle.addListener('mouseover', function() {
+    cityCircle.addListener('click', function() {
       infoWindow.open(map);
     });
   });
