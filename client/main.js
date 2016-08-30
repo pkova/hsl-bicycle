@@ -35,10 +35,6 @@ function initMap() {
     cityCircle.addListener('mouseover', function() {
       infoWindow.open(map);
     });
-
-    cityCircle.addListener('mouseout', function() {
-      infoWindow.close();
-    });
   });
 }
 
