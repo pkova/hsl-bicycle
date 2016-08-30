@@ -1,4 +1,76 @@
 library(MASS)
+library(dplyr)
+library(tidyr)
+
+bikedata <- read.table('C:/Users/Pekka Autere/Documents/Analytics/HSL data/hsl_train.csv', 
+                       header = T, sep = ',', stringsAsFactors = F)
+
+str(bikedata)
+
+data<-preprocess(bikedata)
+x<-createX(data)
+y<-createY(data)
+
+mod<-lm(y~x)
+
+preprocess <- function(bikedata){
+
+bikedata<-bikedata[bikedata$month>4,]
+
+bikedata$Mon <- ifelse(data$dayofweek == "Maanantai", 1, 0)
+bikedata$Tue <- ifelse(data$dayofweek == "Tiistai", 1, 0)
+bikedata$Wed <- ifelse(data$dayofweek == "Keskiviikko", 1, 0)
+bikedata$Thu <- ifelse(data$dayofweek == "Torstai", 1, 0)
+bikedata$Fri <- ifelse(data$dayofweek == "Perjantai", 1, 0)
+bikedata$Sat <- ifelse(data$dayofweek == "Lauantai", 1, 0)
+
+bikedata$May <- ifelse(data$dayofweek == 5, 1, 0)
+bikedata$Jun <- ifelse(data$dayofweek == 6, 1, 0)
+bikedata$Jul <- ifelse(data$dayofweek == 7, 1, 0)
+
+bikedata$hour0_3<- ifelse(0=data$hour <= 3,1, 0)
+bikedata$hour4_7 <- ifelse(4<=data$hour <= 7, 1, 0)
+bikedata$hour8_11 <- ifelse(8<=data$hour <= 11, 1, 0)
+bikedata$hour12_15 <- ifelse(12<=data$hour <= 15, 1, 0)
+bikedata$hour16_19 <- ifelse(16<=data$hour <= 19, 1, 0)
+bikedata$hour20_23 <- ifelse(20<=data$hour <= 23, 1, 0)
+
+bikedata <- na.omit(bikedata)
+return(bikedata)
+}
+
+createY <- function(data,station){
+  
+  stationdata<-bikedata[bikedata$station=="A01",]
+  rows=nrow(stationdata)
+  cols=1
+  y<-matrix(stationdata$max_availability,rows,cols)
+  return(y)
+}
+
+createX <- function(data,station){
+  
+  stationdata<-bikedata[bikedata$station=="A01",]
+  rows=nrow(stationdata)
+  cols=16
+  x<-matrix(c(rep(1,rows),
+              bikedata$Mon,
+              bikedata$Tue,
+              bikedata$Wed,
+              bikedata$Thu,
+              bikedata$Fri,
+              bikedata$Sat,
+              bikedata$May,
+              bikedata$Jun,
+              bikedata$Jul,
+              bikedata$hour0_3,
+              bikedata$hour4_7,
+              bikedata$hour8_11,
+              bikedata$hour12_15,
+              bikedata$hour16_19,
+              bikedata$hour20_23),rows,cols)
+  return(x)
+}
 
 be = matrix(c(2,3),2,1)
 x=matrix(rexp(200, rate=.1),20,2)
