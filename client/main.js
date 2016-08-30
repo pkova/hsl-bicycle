@@ -8,22 +8,36 @@ function initMap() {
 
   var bikeLayer = new google.maps.BicyclingLayer();
   bikeLayer.setMap(map);
+
   var coords = [
-    {lat: 60.165092, lng: 24.930971, weight: 0.8},
-    {lat: 60.158126, lng: 24.945420, weight: 0.5},
-    {lat: 60.1699, lng: 24.9384, weight: 0.1}
+    {lat: 60.165092, lng: 24.930971, total_slots: 20, available_bikes: 1, location_name: 'Kaisaniemi'},
+    {lat: 60.158126, lng: 24.945420, total_slots: 15, available_bikes: 3, location_name: 'Ruoholahti'},
+    {lat: 60.1699, lng: 24.9384, total_slots: 25, available_bikes: 0, location_name: 'Niemenmäki'}
   ];
 
   coords.forEach(function(coord) {
     var cityCircle = new google.maps.Circle({
-      strokeColor: getColor(coord.weight),
+      strokeColor: getColor(1),
       strokeOpacity: 0.8,
       strokeWeight: 2,
-      fillColor: getColor(coord.weight),
+      fillColor: getColor(1),
       fillOpacity: 0.35,
       map: map,
       center: coord,
       radius: 300
+    });
+
+    var infoWindow = new google.maps.InfoWindow({
+      content: coord.location_name,
+      position: {lat: coord.lat, lng: coord.lng}
+    });
+
+    cityCircle.addListener('mouseover', function() {
+      infoWindow.open(map);
+    });
+
+    cityCircle.addListener('mouseout', function() {
+      infoWindow.close();
     });
   });
 }
