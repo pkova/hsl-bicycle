@@ -14,36 +14,39 @@ document.querySelector('.slider').addEventListener('input', function(e) {
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 60.1699, lng: 24.9384},
-    zoom: 13,
+    zoom: 14,
     disableDefaultUI: true
   });
 
   createLocations();
 }
 
-function getColor(bikes){
-  var value = 1 - Math.min(bikes / 6, 1);
+function getColor(bikes, maxBikes){
+  var value = 1 - (bikes / maxBikes);
   //value from 0 to 1
-  var hue=((1-value)*120).toString(10);
+  var hue = Math.round(((1-value)*120).toString(10));
   return ["hsl(",hue,",100%,50%)"].join("");
 }
 
 function createLocations(time) {
-  data.forEach(function(obj) {
+  json.forEach(function(obj) {
+    var lat = parseFloat(obj.lat);
+    var lng = parseFloat(obj.lon);
+    var color = getColor(obj.avl_bikes_max, obj.total_slots);
     var cityCircle = new google.maps.Circle({
-      strokeColor: getColor(obj.predictions[1].available_bikes),
+      strokeColor: color,
       strokeOpacity: 0.8,
       strokeWeight: 2,
-      fillColor: getColor(obj.predictions[1].available_bikes),
+      fillColor: color,
       fillOpacity: 0.35,
       map: map,
-      center: obj,
-      radius: 100
+      center: {lat: lat, lng: lng},
+      radius: 50
     });
 
     var infoWindow = new google.maps.InfoWindow({
-      content: obj.location_name + ' ' + obj.predictions[0].available_bikes,
-      position: {lat: obj.lat, lng: obj.lng}
+      content: obj.name + ' ' + obj.avl_bikes_max + '/' + obj.total_slots,
+      position: {lat: lat, lng: lng}
     });
 
     cityCircle.addListener('click', function() {
