@@ -25,7 +25,7 @@ function initMap() {
 }
 
 function getColor(bikes){
-  var value = Math.min(bikes / 6, 1);
+  var value = 1 - Math.min(bikes / 6, 1);
   //value from 0 to 1
   var hue=((1-value)*120).toString(10);
   return ["hsl(",hue,",100%,50%)"].join("");
@@ -34,14 +34,14 @@ function getColor(bikes){
 function createLocations(time) {
   data.forEach(function(obj) {
     var cityCircle = new google.maps.Circle({
-      strokeColor: getColor(1),
+      strokeColor: getColor(obj.predictions[1].available_bikes),
       strokeOpacity: 0.8,
       strokeWeight: 2,
-      fillColor: getColor(1),
+      fillColor: getColor(obj.predictions[1].available_bikes),
       fillOpacity: 0.35,
       map: map,
       center: obj,
-      radius: 300
+      radius: 100
     });
 
     var infoWindow = new google.maps.InfoWindow({
@@ -54,6 +54,7 @@ function createLocations(time) {
     });
 
     obj.circle = cityCircle;
+    obj.info = infoWindow;
 
   });
 }
@@ -61,5 +62,6 @@ function createLocations(time) {
 function render(time) {
   data.forEach(function(obj) {
     obj.circle.setOptions({strokeColor: getColor(obj.predictions[time].available_bikes), fillColor: getColor(obj.predictions[time].available_bikes)});
+    obj.info.setContent(obj.location_name + ' ' + obj.predictions[time].available_bikes);
   });
 }
