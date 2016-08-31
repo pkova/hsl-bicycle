@@ -57,9 +57,10 @@ a[href^="https://maps.google.com/maps"]{
 }
 
 .scalecontainer {
-  width: 50px;
-  float: left;
   position: absolute;
+  z-index: 1;
+  left: 30px;
+  top: 128px;
 }
 
 .scalecontainer > div {
