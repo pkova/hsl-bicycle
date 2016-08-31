@@ -1,10 +1,16 @@
 var map;
+var circles = [];
 
-var coords = [
-  {lat: 60.165092, lng: 24.930971, total_slots: 20, available_bikes: 1, location_name: 'Kaisaniemi'},
-  {lat: 60.158126, lng: 24.945420, total_slots: 15, available_bikes: 3, location_name: 'Ruoholahti'},
-  {lat: 60.1699, lng: 24.9384, total_slots: 25, available_bikes: 0, location_name: 'Niemenmäki'}
+var data = [
+  {lat: 60.165092, lng: 24.930971, total_slots: 20, available_bikes: 1, location_name: 'Kaisaniemi', time: 2},
+  {lat: 60.158126, lng: 24.945420, total_slots: 15, available_bikes: 3, location_name: 'Ruoholahti', time: 1},
+  {lat: 60.1699, lng: 24.9384, total_slots: 25, available_bikes: 0, location_name: 'Niemenmäki', time: 0}
 ];
+
+document.querySelector('.slider').addEventListener('input', function(e) {
+  var selectedTime = parseInt(this.value, 10);
+  render(selectedTime);
+});
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
@@ -16,7 +22,7 @@ function initMap() {
   var bikeLayer = new google.maps.BicyclingLayer();
   bikeLayer.setMap(map);
 
-  render();
+  createLocations();
 }
 
 function getColor(value){
@@ -25,8 +31,8 @@ function getColor(value){
   return ["hsl(",hue,",100%,50%)"].join("");
 }
 
-function render() {
-  coords.forEach(function(coord) {
+function createLocations(time) {
+  data.forEach(function(obj) {
     var cityCircle = new google.maps.Circle({
       strokeColor: getColor(1),
       strokeOpacity: 0.8,
@@ -34,17 +40,22 @@ function render() {
       fillColor: getColor(1),
       fillOpacity: 0.35,
       map: map,
-      center: coord,
+      center: obj,
       radius: 300
     });
 
     var infoWindow = new google.maps.InfoWindow({
-      content: coord.location_name,
-      position: {lat: coord.lat, lng: coord.lng}
+      content: obj.location_name,
+      position: {lat: obj.lat, lng: obj.lng}
     });
 
     cityCircle.addListener('click', function() {
       infoWindow.open(map);
     });
+
+    circles.push({circle: cityCircle, info: infoWindow});
   });
+}
+
+function render(time) {
 }
