@@ -1,11 +1,5 @@
 var map;
 
-var data = [
-  {lat: 60.165092, lng: 24.930971, location_name: 'Kaisaniemi', predictions: [{timestamp: 0, total_slots: 25, available_bikes: 5}, {timestamp: 1, total_slots: 25, available_bikes: 4}, {timestamp: 2, total_slots: 25, available_bikes: 2}]},
-  {lat: 60.158126, lng: 24.945420, location_name: 'Ruoholahti', predictions: [{timestamp: 0, total_slots: 25, available_bikes: 7}, {timestamp: 1, total_slots: 25, available_bikes: 7}, {timestamp: 2, total_slots: 25, available_bikes: 0}]},
-  {lat: 60.1699, lng: 24.9384,  location_name: 'Niemenmäki', predictions: [{timestamp: 0, total_slots: 25, available_bikes: 0}, {timestamp: 1, total_slots: 25, available_bikes: 1}, {timestamp: 2, total_slots: 25, available_bikes: 5}]}
-];
-
 document.querySelector('.slider').addEventListener('input', function(e) {
   var selectedTime = parseInt(this.value, 10);
   render(selectedTime);
@@ -25,7 +19,7 @@ times.forEach(function(time, i) {
   }
   time.innerText = text;
   if (currentHour + i === 23) {
-    currentHour = -originalTime;
+    currentHour = -(24 - originalTime);
   }
 });
 
