@@ -11,6 +11,24 @@ document.querySelector('.slider').addEventListener('input', function(e) {
   render(selectedTime);
 });
 
+// Initalize slider
+var time = new Date();
+var currentHour = time.getHours();
+var originalTime = currentHour;
+
+var times = Array.prototype.slice.call(document.querySelectorAll('.timescontainer > div'));
+
+times.forEach(function(time, i) {
+  var text = currentHour + i;
+  if (text.toString().length === 1) {
+    text = '0' + text;
+  }
+  time.innerText = text;
+  if (currentHour + i === 23) {
+    currentHour = -originalTime;
+  }
+});
+
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 60.1699, lng: 24.9384},
