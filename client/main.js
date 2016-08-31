@@ -18,9 +18,6 @@ function initMap() {
     disableDefaultUI: true
   });
 
-  var bikeLayer = new google.maps.BicyclingLayer();
-  bikeLayer.setMap(map);
-
   createLocations();
 }
 
