@@ -59,11 +59,26 @@ a[href^="https://maps.google.com/maps"]{
 .scalecontainer {
   position: absolute;
   z-index: 1;
-  left: 30px;
-  top: 128px;
+  left: 24px;
+  top: 53px;
 }
 
 .scalecontainer > div {
   height: 50px;
   width: 50px;
+}
+
+.leftmenu {
+  position: absolute;
+  height: 400px;
+  width: 100px;
+  background-color: white;
+  z-index: 1;
+  opacity: 0.75;
+  top: 54px;
+  left: 25px;
+}
+
+.scalecontainer > div > div {
+  padding-top: 14px;
 }

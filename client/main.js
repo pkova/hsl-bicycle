@@ -48,6 +48,11 @@ function getPredictColor(likelihood){
   return ["hsl(",hue,",100%,50%)"].join("");
 }
 
+function roundToDecimals(num) {
+  var str = num.toString();
+  return parseFloat(str.substr(0, str.indexOf('.') + 3));
+}
+
 function createLocations(time) {
   json.forEach(function(obj) {
     var lat = parseFloat(obj.lat);
@@ -101,7 +106,7 @@ function render(time) {
         strokeWeight: 2,
         fillOpacity: 0.35
       });
-      obj.info.setContent(obj.name + ' ' + obj.predictions[time].likelihood);
+      obj.info.setContent(obj.name + ' ' + roundToDecimals(obj.predictions[time].likelihood));
     });
   }
 
