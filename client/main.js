@@ -7,7 +7,8 @@ document.querySelector('.slider').addEventListener('input', function(e) {
 
 // Initalize slider
 var time = new Date();
-var currentHour = time.getHours();
+// var currentHour = time.getHours();
+var currentHour = 0;
 var originalTime = currentHour;
 
 var times = Array.prototype.slice.call(document.querySelectorAll('.timescontainer > div'));
@@ -33,8 +34,15 @@ function initMap() {
   createLocations();
 }
 
-function getColor(bikes, maxBikes){
+function getRealColor(bikes, maxBikes){
   var value = 1 - (bikes / maxBikes);
+  //value from 0 to 1
+  var hue = Math.round(((1-value)*120).toString(10));
+  return ["hsl(",hue,",100%,50%)"].join("");
+}
+
+function getPredictColor(likelihood){
+  var value = likelihood / 0.3;
   //value from 0 to 1
   var hue = Math.round(((1-value)*120).toString(10));
   return ["hsl(",hue,",100%,50%)"].join("");
@@ -44,7 +52,7 @@ function createLocations(time) {
   json.forEach(function(obj) {
     var lat = parseFloat(obj.lat);
     var lng = parseFloat(obj.lon);
-    var color = getColor(obj.avl_bikes_max, obj.total_slots);
+    var color = getRealColor(obj.avl_bikes_max, obj.total_slots);
     var cityCircle = new google.maps.Circle({
       strokeColor: color,
       strokeOpacity: 0.8,
@@ -72,8 +80,14 @@ function createLocations(time) {
 }
 
 function render(time) {
-  data.forEach(function(obj) {
-    obj.circle.setOptions({strokeColor: getColor(obj.predictions[time].available_bikes), fillColor: getColor(obj.predictions[time].available_bikes)});
-    obj.info.setContent(obj.location_name + ' ' + obj.predictions[time].available_bikes);
+  json.forEach(function(obj) {
+    obj.circle.setOptions({
+      strokeColor: getPredictColor(obj.predictions[time].likelihood + 0.05),
+      fillColor: getPredictColor(obj.predictions[time].likelihood),
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillOpacity: 0.35
+    });
+    obj.info.setContent(obj.name + ' ' + obj.predictions[time].likelihood);
   });
 }
