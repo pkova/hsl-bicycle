@@ -98,6 +98,12 @@ a[href^="https://maps.google.com/maps"]{
   margin-left: 10px;
 }
 
+.rightmenu > p {
+  font-size: small;
+  margin-right: 10px;
+}
+
 .scalecontainer > div > div {
   padding-top: 1em;
 }
+
