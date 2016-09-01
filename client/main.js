@@ -57,12 +57,11 @@ function createLocations(time) {
   json.forEach(function(obj) {
     var lat = parseFloat(obj.lat);
     var lng = parseFloat(obj.lon);
-    var color = getRealColor(obj.avl_bikes_max, obj.total_slots);
     var cityCircle = new google.maps.Circle({
-      strokeColor: color,
+      strokeColor: getPredictColor(obj.predictions[0].likelihood + 0.05),
       strokeOpacity: 0.8,
       strokeWeight: 2,
-      fillColor: color,
+      fillColor: getPredictColor(obj.predictions[0].likelihood),
       fillOpacity: 0.35,
       map: map,
       center: {lat: lat, lng: lng},
@@ -70,7 +69,7 @@ function createLocations(time) {
     });
 
     var infoWindow = new google.maps.InfoWindow({
-      content: obj.name + ' ' + obj.avl_bikes_max + '/' + obj.total_slots,
+      content: obj.name + ' ' + roundToDecimals(obj.predictions[0].likelihood),
       position: {lat: lat, lng: lng}
     });
 
@@ -85,19 +84,19 @@ function createLocations(time) {
 }
 
 function render(time) {
-  if (time === 0) {
-    json.forEach(function(obj) {
-      var color = getRealColor(obj.avl_bikes_max, obj.total_slots);
-      obj.circle.setOptions({
-        strokeColor: color,
-        fillColor: color,
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillOpacity: 0.35
-      });
-      obj.info.setContent(obj.name + ' ' + obj.avl_bikes_max + '/' + obj.total_slots);
-    });
-  } else {
+  // if (time === 0) {
+  //   json.forEach(function(obj) {
+  //     var color = getRealColor(obj.avl_bikes_max, obj.total_slots);
+  //     obj.circle.setOptions({
+  //       strokeColor: color,
+  //       fillColor: color,
+  //       strokeOpacity: 0.8,
+  //       strokeWeight: 2,
+  //       fillOpacity: 0.35
+  //     });
+  //     obj.info.setContent(obj.name + ' ' + obj.avl_bikes_max + '/' + obj.total_slots);
+  //   });
+  // } else {
     json.forEach(function(obj) {
       obj.circle.setOptions({
         strokeColor: getPredictColor(obj.predictions[time].likelihood + 0.05),
@@ -108,6 +107,6 @@ function render(time) {
       });
       obj.info.setContent(obj.name + ' ' + roundToDecimals(obj.predictions[time].likelihood));
     });
-  }
+  // }
 
 }

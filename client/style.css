@@ -94,9 +94,10 @@ a[href^="https://maps.google.com/maps"]{
   opacity: 0.75;
 }
 
-.rightmenu h1 {
+.rightmenu * {
   margin-left: 10px;
 }
+
 .scalecontainer > div > div {
   padding-top: 1em;
 }
