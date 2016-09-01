@@ -36,15 +36,15 @@ a[href^="https://maps.google.com/maps"]{
   margin: auto;
   width: 42.5%;
   position: absolute;
-  bottom: 25px;
-  left: 416px;
+  bottom: 4em;
+  left: 37em;
 }
 
 .timescontainer {
   position: absolute;
   background-color: rgba(255, 255, 255, 0.75);
-  bottom: 3px;
-  left: 416px;
+  bottom: 1em;
+  left: 25.45em;
 }
 
 .timescontainer > div {
@@ -70,15 +70,30 @@ a[href^="https://maps.google.com/maps"]{
 
 .leftmenu {
   position: absolute;
-  height: 400px;
-  width: 100px;
+  height: 25em;
+  width: 6em;
   background-color: white;
   z-index: 1;
   opacity: 0.75;
-  top: 54px;
-  left: 25px;
+  top: 5em;
+  left: 1.5em;
 }
 
+.rightmenu {
+  position: absolute;
+  height: 25em;
+  background-color: white;
+  width: 16em;
+  right: 1.5em;
+  top: 5em;
+  z-index: 1;
+  text-align: left;
+  opacity: 0.75;
+}
+
+.rightmenu h1 {
+  margin-left: 10px;
+}
 .scalecontainer > div > div {
-  padding-top: 14px;
+  padding-top: 1em;
 }
