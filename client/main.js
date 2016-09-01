@@ -68,8 +68,94 @@ function createLocations(time) {
       radius: 50
     });
 
+    var content = document.createElement('div');
+
+    var placeName = document.createElement('div');
+    placeName.innerText = obj.name;
+    content.appendChild(placeName);
+
+    var odds = document.createElement('div');
+    odds.innerText = roundToDecimals(obj.predictions[0].likelihood) + ' % klo 00';
+    content.appendChild(odds);
+
+    obj.odds = odds;
+
+    var canvas = document.createElement('canvas');
+    canvas.width = 350;
+    canvas.height = 150;
+
+    var context = canvas.getContext('2d');
+
+    context.fillStyle = '#000000';
+
+    context.beginPath();
+    context.moveTo(24, 0);
+    context.lineTo(24, 150);
+    context.stroke();
+
+    context.beginPath();
+    context.moveTo(13, 130);
+    context.lineTo(400, 130);
+    context.stroke();
+
+    context.font = '10px Helvetica, sans-serif';
+
+    context.fillText('0.3', 0, 33);
+    context.strokeText('0.3', 0, 33);
+    context.fillText('0.2', 0, 66);
+    context.strokeText('0.2', 0, 66);
+    context.fillText('0.1', 0, 99);
+    context.strokeText('0.1', 0, 99);
+    context.fillText('0', 0, 135);
+    context.strokeText('0', 0, 135);
+
+    context.fillText('00', 32, 140);
+    context.strokeText('00', 32, 140);
+    context.fillText('01', 50, 140);
+    context.strokeText('01', 50, 140);
+    context.fillText('02', 67, 140);
+    context.strokeText('02', 67, 140);
+    context.fillText('03', 84, 140);
+    context.strokeText('03', 84, 140);
+    context.fillText('04', 101, 140);
+    context.strokeText('04', 101, 140);
+    context.fillText('05', 117, 140);
+    context.strokeText('05', 117, 140);
+    context.fillText('06', 134, 140);
+    context.strokeText('06', 134, 140);
+    context.fillText('07', 152, 140);
+    context.strokeText('07', 152, 140);
+    context.fillText('08', 169, 140);
+    context.strokeText('08', 169, 140);
+    context.fillText('09', 186, 140);
+    context.strokeText('09', 186, 140);
+    context.fillText('10', 202, 140);
+    context.strokeText('10', 202, 140);
+    context.fillText('11', 220, 140);
+    context.strokeText('11', 220, 140);
+    context.fillText('12', 236, 140);
+    context.strokeText('12', 236, 140);
+    context.fillText('13', 253, 140);
+    context.strokeText('13', 253, 140);
+    context.fillText('14', 270, 140);
+    context.strokeText('14', 270, 140);
+    context.fillText('15', 287, 140);
+    context.strokeText('15', 287, 140);
+    context.fillText('16', 305, 140);
+    context.strokeText('16', 305, 140);
+    context.fillText('17', 321, 140);
+    context.strokeText('17', 321, 140);
+
+
+    obj.predictions.forEach(function(prediction, i) {
+      context.fillStyle = '#'+Math.floor(Math.random()*16777215).toString(16);
+      context.fillRect((i * 17) + 45, 125, -14, -prediction.likelihood * 300);
+    });
+
+    content.appendChild(canvas);
+
     var infoWindow = new google.maps.InfoWindow({
-      content: obj.name + ' ' + roundToDecimals(obj.predictions[0].likelihood),
+      content: content,
       position: {lat: lat, lng: lng}
     });
 
@@ -105,8 +191,9 @@ function render(time) {
         strokeWeight: 2,
         fillOpacity: 0.35
       });
-      obj.info.setContent(obj.name + ' ' + roundToDecimals(obj.predictions[time].likelihood));
+      obj.odds.innerText = roundToDecimals(obj.predictions[time].likelihood) + ' % klo' + ' ' + time;
     });
   // }
 
 }
+
