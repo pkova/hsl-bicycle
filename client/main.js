@@ -80,14 +80,29 @@ function createLocations(time) {
 }
 
 function render(time) {
-  json.forEach(function(obj) {
-    obj.circle.setOptions({
-      strokeColor: getPredictColor(obj.predictions[time].likelihood + 0.05),
-      fillColor: getPredictColor(obj.predictions[time].likelihood),
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillOpacity: 0.35
+  if (time === 0) {
+    json.forEach(function(obj) {
+      var color = getRealColor(obj.avl_bikes_max, obj.total_slots);
+      obj.circle.setOptions({
+        strokeColor: color,
+        fillColor: color,
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillOpacity: 0.35
+      });
+      obj.info.setContent(obj.name + ' ' + obj.avl_bikes_max + '/' + obj.total_slots);
     });
-    obj.info.setContent(obj.name + ' ' + obj.predictions[time].likelihood);
-  });
+  } else {
+    json.forEach(function(obj) {
+      obj.circle.setOptions({
+        strokeColor: getPredictColor(obj.predictions[time].likelihood + 0.05),
+        fillColor: getPredictColor(obj.predictions[time].likelihood),
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillOpacity: 0.35
+      });
+      obj.info.setContent(obj.name + ' ' + obj.predictions[time].likelihood);
+    });
+  }
+
 }
